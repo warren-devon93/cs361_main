@@ -1,0 +1,15 @@
+<RCC>
+  <qresource>
+    <file>icons/backpage.png</file>
+    <file>icons/cart.png</file>
+    <file>icons/edit.png</file>
+    <file>icons/floppy.png</file>
+    <file>icons/plus.png</file>
+    <file>icons/spyglass.png</file>
+    <file>icons/star_black.png</file>
+    <file>icons/star_clear.png</file>
+    <file>icons/star_gold.png</file>
+    <file>icons/trash.png</file>
+    <file>icons/upload.png</file>
+  </qresource>
+</RCC>
