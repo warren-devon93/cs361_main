@@ -7,11 +7,11 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         super().__init__()
         self.setupUi(self)
         # Additional ui setup for app lists and tables
-        catalogHeaders = ["", "Recipe Name", ""]
-        recipeHeaders = ["Measurement", "Instruction"]
-        self.catalogTable.setHorizontalHeaderLabels(catalogHeaders)
-        self.ingredientsTable.setHorizontalHeaderLabels(recipeHeaders)
+        self.catalogTable.setHorizontalHeaderLabels(["", "Recipe Name", ""])
+        self.ingredientsTable.setHorizontalHeaderLabels(["Measurement", 
+                                                         "Instruction"])
         self.ingredientsTable.setColumnWidth(0, 150)
+        # TODO: Set up text wraps and max string length limits for all table fields
         # Setting up button signals
         self.addButton.clicked.connect(self.addButtonClicked)
         self.backpageButton.clicked.connect(self.backpageButtonClicked)
@@ -27,7 +27,8 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.saveButton.setDisabled(True)
         self.uploadButton.setDisabled(True)
         # Set up blank rows and line edits for user input
-        #self.ingredientsTable.insertRow()
+        self.ingredientsTable.insertRow(0)
+        self.ingredientsTable.setVerticalHeaderLabels([""])
         # Set stacked widget index to recipePage
         self.stackedWidget.setCurrentWidget(self.recipePage)
     def backpageButtonClicked(self):
