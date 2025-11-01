@@ -510,7 +510,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          <attribute name="title">
           <string>Instructions</string>
          </attribute>
-         <widget class="QListWidget" name="instructionsList">
+         <widget class="QTableWidget" name="instructionsTable">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -519,18 +519,17 @@ li.checked::marker { content: &quot;\2612&quot;; }
             <height>461</height>
            </rect>
           </property>
-          <property name="alternatingRowColors">
-           <bool>true</bool>
-          </property>
-          <property name="isWrapping" stdset="0">
+          <attribute name="horizontalHeaderVisible">
            <bool>false</bool>
-          </property>
-          <property name="spacing">
-           <number>5</number>
-          </property>
-          <property name="uniformItemSizes">
+          </attribute>
+          <attribute name="horizontalHeaderStretchLastSection">
            <bool>true</bool>
-          </property>
+          </attribute>
+          <column>
+           <property name="text">
+            <string/>
+           </property>
+          </column>
          </widget>
         </widget>
        </widget>

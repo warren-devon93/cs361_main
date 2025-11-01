@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem
 from ui_mainwindow import Ui_mainWindow
 
 class MainWindow(QMainWindow, Ui_mainWindow):
@@ -26,9 +26,11 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.deleteButton.setDisabled(True)
         self.saveButton.setDisabled(True)
         self.uploadButton.setDisabled(True)
-        # Set up blank rows and line edits for user input
+        # Insert first blank row in ingredients and instructions tables
         self.ingredientsTable.insertRow(0)
         self.ingredientsTable.setVerticalHeaderLabels([""])
+        self.instructionsTable.insertRow(0)
+        self.instructionsTable.setVerticalHeaderLabels(["1. "])
         # Set stacked widget index to recipePage
         self.stackedWidget.setCurrentWidget(self.recipePage)
     def backpageButtonClicked(self):

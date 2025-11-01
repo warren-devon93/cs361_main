@@ -16,10 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QHeaderView,
-    QLineEdit, QListWidget, QListWidgetItem, QMainWindow,
-    QPushButton, QSizePolicy, QSplitter, QStackedWidget,
-    QTabWidget, QTableWidget, QTableWidgetItem, QTextEdit,
-    QVBoxLayout, QWidget)
+    QLineEdit, QMainWindow, QPushButton, QSizePolicy,
+    QSplitter, QStackedWidget, QTabWidget, QTableWidget,
+    QTableWidgetItem, QTextEdit, QVBoxLayout, QWidget)
 import resource_rc
 
 class Ui_mainWindow(object):
@@ -212,13 +211,15 @@ class Ui_mainWindow(object):
         self.tabWidget.addTab(self.ingredientsTab, "")
         self.instructionsTab = QWidget()
         self.instructionsTab.setObjectName(u"instructionsTab")
-        self.instructionsList = QListWidget(self.instructionsTab)
-        self.instructionsList.setObjectName(u"instructionsList")
-        self.instructionsList.setGeometry(QRect(10, 10, 851, 461))
-        self.instructionsList.setAlternatingRowColors(True)
-        self.instructionsList.setProperty(u"isWrapping", False)
-        self.instructionsList.setSpacing(5)
-        self.instructionsList.setUniformItemSizes(True)
+        self.instructionsTable = QTableWidget(self.instructionsTab)
+        if (self.instructionsTable.columnCount() < 1):
+            self.instructionsTable.setColumnCount(1)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.instructionsTable.setHorizontalHeaderItem(0, __qtablewidgetitem5)
+        self.instructionsTable.setObjectName(u"instructionsTable")
+        self.instructionsTable.setGeometry(QRect(10, 10, 851, 461))
+        self.instructionsTable.horizontalHeader().setVisible(False)
+        self.instructionsTable.horizontalHeader().setStretchLastSection(True)
         self.tabWidget.addTab(self.instructionsTab, "")
         self.stackedWidget.addWidget(self.recipePage)
         self.hSplitter.addWidget(self.pageFrame)
