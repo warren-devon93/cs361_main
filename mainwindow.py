@@ -11,11 +11,16 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.ingredientsTable.setHorizontalHeaderLabels(["Measurement", 
                                                          "Ingredient"])
         self.ingredientsTable.setColumnWidth(0, 150)
+        self.ingredientsTable.verticalHeader().setVisible(False)
+        self.instructionsTable.verticalHeader().setVisible(True)
         # TODO: Set up text wraps and max string length limits for all table fields
         # Set button signals
         self.addButton.clicked.connect(self.addButtonClicked)
         self.backpageButton.clicked.connect(self.backpageButtonClicked)
-        self.ingredientsTable.itemChanged.connect(self.ingredientAdded)
+        #self.ingredientsTable.itemChanged.connect(self.ingredientAdded)
+        #self.instructionsTable.itemChanged.connect(self.instructionAdded)
+        self.ingredientsTable.itemChanged.connect(self.rowAppended)
+        self.instructionsTable.itemChanged.connect(self.rowAppended)
         self.app = app
 
     # TODO: Renders recipe page
@@ -33,11 +38,9 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.backpageButton.setDisabled(False)
         self.addButton.setDisabled(True)
         self.uploadButton.setDisabled(True)
-        # Insert first blank row in ingredients and instructions tables
+        # Insert initial blank rows in ingredients and instructions tables
         self.ingredientsTable.insertRow(0)
-        self.ingredientsTable.verticalHeader().setVisible(False)
         self.instructionsTable.insertRow(0)
-        self.instructionsTable.setVerticalHeaderLabels(["1. "])
         # Set appropriate stacked widgets indices
         self.stackedPages.setCurrentWidget(self.recipePage)
         self.stackedWidget.setCurrentWidget(self.guidePage)
@@ -73,17 +76,16 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # TODO: Populate rows of grocery list table with ingredients data
         # TODO: Set stacked widget to grocery list page
 
-    def ingredientAdded(self):
-        if (self.ingredientsTable.currentIndex().column()==1
-            and self.ingredientsTable.currentIndex().row()==
-            self.ingredientsTable.rowCount()-1):
-            self.ingredientsTable.insertRow(self.ingredientsTable.rowCount())
-    
-    def instructionAdded(self):
-        if (self.instructionsTable.currentIndex().column()==1
-            and self.instructionsTable.currentIndex().row()==
-            self.inssTable.rowCount()-1):
-            self.ingredientsTable.insertRow(self.ingredientsTable.rowCount())
+    def rowAppended(self):
+        if self.tabWidget.currentWidget() is self.ingredientsTab:
+            table = self.ingredientsTable
+        else:
+            table = self.instructionsTable
+        if (table.currentIndex().column()==table.columnCount()-1 and
+            table.currentIndex().row()==table.rowCount()-1):
+            table.insertRow(table.rowCount())
+        
+
 
 """
     def deleteButtonClicked(self):
