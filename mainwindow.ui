@@ -294,7 +294,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:700;&quot;&gt;Recipe Catalog&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="QStackedWidget" name="stackedPages">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -455,7 +455,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </font>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="ingredientsTab">
          <attribute name="title">
@@ -505,6 +505,71 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </property>
           </column>
          </widget>
+         <widget class="QStackedWidget" name="stackedWidget">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>340</y>
+            <width>831</width>
+            <height>121</height>
+           </rect>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="blankPage"/>
+          <widget class="QWidget" name="guidePage">
+           <widget class="QListWidget" name="listWidget">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>811</width>
+              <height>101</height>
+             </rect>
+            </property>
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="itemAlignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <item>
+             <property name="text">
+              <string>1. On ingredients tab, add recipe ingredients and their measurements.</string>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>2. On instructions tab, add step-by-step instructions for the recipe.</string>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>3. Press the save button on the toolbar to add the recipe to your catalog.</string>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+            </item>
+           </widget>
+          </widget>
+         </widget>
         </widget>
         <widget class="QWidget" name="instructionsTab">
          <attribute name="title">
@@ -531,7 +596,84 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </property>
           </column>
          </widget>
+         <widget class="QStackedWidget" name="stackedWidget_2">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>340</y>
+            <width>831</width>
+            <height>121</height>
+           </rect>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="blankPage_2"/>
+          <widget class="QWidget" name="guidePage_2">
+           <widget class="QListWidget" name="listWidget_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>811</width>
+              <height>101</height>
+             </rect>
+            </property>
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="itemAlignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+            <item>
+             <property name="text">
+              <string>1. On ingredients tab, add recipe ingredients and their measurements.</string>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>2. On instructions tab, add step-by-step instructions for the recipe.</string>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>3. Press the save button on the toolbar to add the recipe to your catalog.</string>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+            </item>
+           </widget>
+          </widget>
+         </widget>
         </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="groceryPage">
+       <widget class="QListWidget" name="groceryList">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>881</width>
+          <height>521</height>
+         </rect>
+        </property>
        </widget>
       </widget>
      </widget>
