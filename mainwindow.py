@@ -19,18 +19,9 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.backpageButton.clicked.connect(self.backpageButtonClicked)
         #self.ingredientsTable.itemChanged.connect(self.ingredientAdded)
         #self.instructionsTable.itemChanged.connect(self.instructionAdded)
-        self.ingredientsTable.itemChanged.connect(self.rowAppended)
-        self.instructionsTable.itemChanged.connect(self.rowAppended)
+        self.ingredientsTable.itemChanged.connect(self.recipeChanged)
+        self.instructionsTable.itemChanged.connect(self.recipeChanged)
         self.app = app
-
-    # TODO: Renders recipe page
-    def renderRecipePage(self):
-        # change disabled status of toolbar buttons
-        self.backpageButton.setDisabled(False)
-        self.addButton.setDisabled(True)
-        self.uploadButton.setDisabled(True)
-        # Set stacked widget index to recipe page
-        self.stackedPages.setCurrentWidget(self.recipePage)
 
     # Slots
     def addButtonClicked(self):
@@ -76,16 +67,32 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # TODO: Populate rows of grocery list table with ingredients data
         # TODO: Set stacked widget to grocery list page
 
-    def rowAppended(self):
+    def recipeChanged(self):
         if self.tabWidget.currentWidget() is self.ingredientsTab:
             table = self.ingredientsTable
         else:
             table = self.instructionsTable
-        if (table.currentIndex().column()==table.columnCount()-1 and
-            table.currentIndex().row()==table.rowCount()-1):
+        if (table.currentColumn()==table.columnCount()-1 and
+            table.currentRow()==table.rowCount()-1 and
+            table.currentIndex().siblingAtColumn(0).data()!=None):
+            # Appends blank row to end of table
             table.insertRow(table.rowCount())
-        
+            # Enable save button if both ingredients and instructions tables populated
+            self.saveButton.setDisabled(False)
+        else:
+            self.saveButton.setDisabled(True)
 
+
+        """
+        row = table.currentRow()
+        blank = True
+        for column in range(table.columnCount()):
+            if table.item(row, column) is not None:
+                blank = False
+                break
+        if blank:
+            table.removeRow(row)        
+        """
 
 """
     def deleteButtonClicked(self):
