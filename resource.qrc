@@ -1,6 +1,8 @@
 <RCC>
   <qresource>
     <file>icons/backpage.png</file>
+    <file>icons/minus_circle.png</file>
+    <file>icons/plus_circle.png</file>
     <file>icons/cart.png</file>
     <file>icons/edit.png</file>
     <file>icons/floppy.png</file>

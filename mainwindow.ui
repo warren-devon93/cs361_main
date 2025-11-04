@@ -304,7 +304,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="catalogPage">
        <widget class="QPushButton" name="searchButton">
@@ -455,7 +455,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </font>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="ingredientsTab">
          <attribute name="title">
@@ -509,21 +509,21 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>340</y>
+            <y>300</y>
             <width>831</width>
-            <height>121</height>
+            <height>161</height>
            </rect>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="blankPage"/>
           <widget class="QWidget" name="guidePage">
-           <widget class="QListWidget" name="listWidget">
+           <widget class="QListWidget" name="guideList">
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>10</y>
+              <y>50</y>
               <width>811</width>
               <height>101</height>
              </rect>
@@ -567,6 +567,52 @@ li.checked::marker { content: &quot;\2612&quot;; }
               </font>
              </property>
             </item>
+           </widget>
+           <widget class="QPushButton" name="addItemButton">
+            <property name="geometry">
+             <rect>
+              <x>250</x>
+              <y>10</y>
+              <width>121</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="resource.qrc">
+              <normaloff>:/icons/plus_circle.png</normaloff>:/icons/plus_circle.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="removeItemButton">
+            <property name="geometry">
+             <rect>
+              <x>400</x>
+              <y>10</y>
+              <width>121</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="resource.qrc">
+              <normaloff>:/icons/minus_circle.png</normaloff>:/icons/minus_circle.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
            </widget>
           </widget>
          </widget>
@@ -595,71 +641,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
             <string/>
            </property>
           </column>
-         </widget>
-         <widget class="QStackedWidget" name="stackedWidget_2">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>340</y>
-            <width>831</width>
-            <height>121</height>
-           </rect>
-          </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <widget class="QWidget" name="blankPage_2"/>
-          <widget class="QWidget" name="guidePage_2">
-           <widget class="QListWidget" name="listWidget_2">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>10</y>
-              <width>811</width>
-              <height>101</height>
-             </rect>
-            </property>
-            <property name="spacing">
-             <number>3</number>
-            </property>
-            <property name="itemAlignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-            <item>
-             <property name="text">
-              <string>1. On ingredients tab, add recipe ingredients and their measurements.</string>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-              </font>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>2. On instructions tab, add step-by-step instructions for the recipe.</string>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-              </font>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>3. Press the save button on the toolbar to add the recipe to your catalog.</string>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-               <bold>true</bold>
-              </font>
-             </property>
-            </item>
-           </widget>
-          </widget>
          </widget>
         </widget>
        </widget>

@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTableWidget
 from ui_mainwindow import Ui_mainWindow
-
+    
 class MainWindow(QMainWindow, Ui_mainWindow):
     def __init__(self, app):
         super().__init__()
@@ -13,14 +13,17 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.ingredientsTable.setColumnWidth(0, 150)
         self.ingredientsTable.verticalHeader().setVisible(False)
         self.instructionsTable.verticalHeader().setVisible(True)
+        # TODO: Testing set parent for stacked widget
+        self.stackedWidget.setParent(self.tabWidget)
+        self.stackedWidget.move(21, 325)
         # TODO: Set up text wraps and max string length limits for all table fields
         # Set button signals
         self.addButton.clicked.connect(self.addButtonClicked)
         self.backpageButton.clicked.connect(self.backpageButtonClicked)
-        #self.ingredientsTable.itemChanged.connect(self.ingredientAdded)
-        #self.instructionsTable.itemChanged.connect(self.instructionAdded)
         self.ingredientsTable.itemChanged.connect(self.recipeChanged)
         self.instructionsTable.itemChanged.connect(self.recipeChanged)
+        self.addItemButton.clicked.connect(self.addItemButtonClicked)
+        self.removeItemButton.clicked.connect(self.removeItemButtonClicked)
         self.app = app
 
     # Slots
@@ -28,6 +31,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # change disabled status of toolbar buttons
         self.backpageButton.setDisabled(False)
         self.addButton.setDisabled(True)
+        self.saveButton.setDisabled(True)
         self.uploadButton.setDisabled(True)
         # Insert initial blank rows in ingredients and instructions tables
         self.ingredientsTable.insertRow(0)
@@ -35,7 +39,6 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # Set appropriate stacked widgets indices
         self.stackedPages.setCurrentWidget(self.recipePage)
         self.stackedWidget.setCurrentWidget(self.guidePage)
-        self.stackedWidget_2.setCurrentWidget(self.guidePage_2)
 
     def backpageButtonClicked(self):
         # Set disabled status of toolbar buttons
@@ -67,32 +70,60 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # TODO: Populate rows of grocery list table with ingredients data
         # TODO: Set stacked widget to grocery list page
 
-    def recipeChanged(self):
+    def addItemButtonClicked(self):
         if self.tabWidget.currentWidget() is self.ingredientsTab:
             table = self.ingredientsTable
         else:
             table = self.instructionsTable
-        if (table.currentColumn()==table.columnCount()-1 and
-            table.currentRow()==table.rowCount()-1 and
-            table.currentIndex().siblingAtColumn(0).data()!=None):
-            # Appends blank row to end of table
-            table.insertRow(table.rowCount())
-            # Enable save button if both ingredients and instructions tables populated
-            self.saveButton.setDisabled(False)
-        else:
-            self.saveButton.setDisabled(True)
+        table.insertRow(table.rowCount())
 
+    def removeItemButtonClicked(self):
+        if self.tabWidget.currentWidget() is self.ingredientsTab:
+            table = self.ingredientsTable
+        else:
+            table = self.instructionsTable
+        table.removeRow(table.currentRow())
+        # TODO: Figure out how to call recipeChanged to check if removal makes both tables full
+
+    def recipeChanged(self):
+        tables = [self.ingredientsTable, self.instructionsTable]
+        for table in tables:
+            blankField = False
+            for row in range(table.rowCount()):
+                for column in range(table.columnCount()):
+                    if table.item(row, column) is None:
+                        blankField = True
+                        break
+            if not blankField:
+
+            elif (table.currentRow()==table.rowCount()-1 and
+                table.currentColumn()==table.columnCount()-1):
+                table.insertRow(table.rowCount())
 
         """
+        if self.tabWidget.currentWidget() is self.ingredientsTab:
+            table = self.ingredientsTable
+        else:
+            table = self.instructionsTable
+        for column in range(table.columnCount()):        
+        """
+
+
+"""
         row = table.currentRow()
         blank = True
         for column in range(table.columnCount()):
-            if table.item(row, column) is not None:
+            if table.item(row, column) is not None and table.item(row, column).text().strip():
                 blank = False
                 break
         if blank:
-            table.removeRow(row)        
-        """
+            table.removeRow(table.currentRow())
+        elif (table.currentRow()==table.rowCount()-1 and
+              table.currentColumn()==table.columnCount()-1):
+            table.insertRow(table.rowCount())
+"""
+
+
 
 """
     def deleteButtonClicked(self):
