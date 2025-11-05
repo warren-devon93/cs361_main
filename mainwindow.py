@@ -16,9 +16,6 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.ingredientsTable.setColumnWidth(0, 150)
         self.ingredientsTable.verticalHeader().setVisible(False)
         self.instructionsTable.verticalHeader().setVisible(True)
-        # Set parent for stacked widget to tab widget and reposition stacked widget
-        self.stackedWidget.setParent(self.tabWidget)
-        self.stackedWidget.move(21, 325)
         # TODO: Set up text wraps and max string length limits for all table fields
         # Set stacked widget parent and location
         self.stackedWidget.setParent(self.tabWidget)
