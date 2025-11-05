@@ -519,7 +519,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           </property>
           <widget class="QWidget" name="blankPage"/>
           <widget class="QWidget" name="guidePage">
-           <widget class="QListWidget" name="guideList">
+           <widget class="QListWidget" name="howToWidget">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -568,12 +568,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </property>
             </item>
            </widget>
-           <widget class="QPushButton" name="addItemButton">
+           <widget class="QPushButton" name="addRowButton">
             <property name="geometry">
              <rect>
-              <x>250</x>
+              <x>270</x>
               <y>10</y>
-              <width>121</width>
+              <width>91</width>
               <height>31</height>
              </rect>
             </property>
@@ -591,12 +591,15 @@ li.checked::marker { content: &quot;\2612&quot;; }
              </size>
             </property>
            </widget>
-           <widget class="QPushButton" name="removeItemButton">
+           <widget class="QPushButton" name="removeRowButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="geometry">
              <rect>
-              <x>400</x>
+              <x>410</x>
               <y>10</y>
-              <width>121</width>
+              <width>91</width>
               <height>31</height>
              </rect>
             </property>
