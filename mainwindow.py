@@ -1,11 +1,14 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QMainWindow
 from ui_mainwindow import Ui_mainWindow
+from tablewidget import TableWidget
     
 class MainWindow(QMainWindow, Ui_mainWindow):
     def __init__(self, app):
         super().__init__()
         self.setupUi(self)
+        # Set of all empty items in ingredients and instructions table
+        
         # Additional ui setup for app lists and tables
         self.catalogTable.setHorizontalHeaderLabels(["", "Recipe Name", ""])
         self.ingredientsTable.setHorizontalHeaderLabels(["Measurement", 
@@ -13,14 +16,14 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.ingredientsTable.setColumnWidth(0, 150)
         self.ingredientsTable.verticalHeader().setVisible(False)
         self.instructionsTable.verticalHeader().setVisible(True)
-        # TODO: Testing set parent for stacked widget
+        # Set parent for stacked widget to tab widget and reposition stacked widget
         self.stackedWidget.setParent(self.tabWidget)
         self.stackedWidget.move(21, 325)
         # TODO: Set up text wraps and max string length limits for all table fields
         # Set stacked widget parent and location
         self.stackedWidget.setParent(self.tabWidget)
         self.stackedWidget.move(21, 325)
-        # Set button signals
+        # Signals
         self.addButton.clicked.connect(self.addButtonClicked)
         self.backpageButton.clicked.connect(self.backpageButtonClicked)
         self.addRowButton.clicked.connect(self.addRowButtonClicked)
@@ -142,4 +145,3 @@ class MainWindow(QMainWindow, Ui_mainWindow):
                 if self.saveButton.isEnabled() is False and self.tablesPopulated():
                     self.saveButton.setEnabled(True)
                 return
-            
