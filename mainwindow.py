@@ -23,6 +23,16 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.instructionsTable.itemChanged.connect(self.recipeChanged)
         self.app = app
 
+    def tablesPopulated(self):
+        tables = [self.ingredientsTable, self.instructionsTable]
+        for table in tables:
+            for row in range(table.rowCount()):
+                for column in range(table.columnCount()):
+                    item = table.item(row, column)
+                    if item is None or not item.text():
+                        return False
+        return True
+
     # Slots
     def addButtonClicked(self):
         # change disabled status of toolbar buttons
@@ -72,6 +82,43 @@ class MainWindow(QMainWindow, Ui_mainWindow):
             table = self.ingredientsTable
         else:
             table = self.instructionsTable
+        row = table.currentRow()
+        blanks = 0
+        # Searches current row for blank cells
+        for column in range(table.columnCount()):
+            item = table.item(row, column)
+            if item is None or not item.text():
+                blanks+=1
+        match blanks:
+            case 0:
+                # Enable save button if both tables entirely populated
+                if self.saveButton.isEnabled() is False and self.tablesPopulated():
+                    self.saveButton.setEnabled(True)
+                # Adds new row if current row last in table
+                if table.currentRow()==table.rowCount()-1:
+                    table.insertRow(table.currentRow()+1)
+                return
+            case 1:
+                # Disables save button if current row only partially populated
+                self.saveButton.setDisabled(True)
+                return
+            case _:
+                # Removes blank row from table
+                table.removeRow(table.currentRow())
+                # Enable save button if both tables entirely populated
+                if self.saveButton.isEnabled() is False and self.tablesPopulated():
+                    self.saveButton.setEnabled(True)
+                return
+            
+
+
+"""
+    def recipeChanged(self):
+        # Checks if currentRow left blank, partially populated, or fully populated
+        if self.tabWidget.currentWidget() is self.ingredientsTab:
+            table = self.ingredientsTable
+        else:
+            table = self.instructionsTable
         if (table.currentColumn()==table.columnCount()-1 and
             table.currentRow()==table.rowCount()-1 and
             table.currentIndex().siblingAtColumn(0).data()!=None):
@@ -81,18 +128,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
             self.saveButton.setDisabled(False)
         else:
             self.saveButton.setDisabled(True)
-
-
-        """
-        row = table.currentRow()
-        blank = True
-        for column in range(table.columnCount()):
-            if table.item(row, column) is not None:
-                blank = False
-                break
-        if blank:
-            table.removeRow(row)        
-        """
+"""
 
 """
     def deleteButtonClicked(self):
