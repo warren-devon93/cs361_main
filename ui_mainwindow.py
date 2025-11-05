@@ -209,26 +209,6 @@ class Ui_mainWindow(object):
         self.ingredientsTable.horizontalHeader().setStretchLastSection(True)
         self.ingredientsTable.verticalHeader().setMinimumSectionSize(40)
         self.ingredientsTable.verticalHeader().setDefaultSectionSize(40)
-        self.stackedWidget = QStackedWidget(self.ingredientsTab)
-        self.stackedWidget.setObjectName(u"stackedWidget")
-        self.stackedWidget.setGeometry(QRect(20, 340, 831, 121))
-        self.blankPage = QWidget()
-        self.blankPage.setObjectName(u"blankPage")
-        self.stackedWidget.addWidget(self.blankPage)
-        self.guidePage = QWidget()
-        self.guidePage.setObjectName(u"guidePage")
-        self.listWidget = QListWidget(self.guidePage)
-        __qlistwidgetitem = QListWidgetItem(self.listWidget)
-        __qlistwidgetitem.setFont(font2);
-        __qlistwidgetitem1 = QListWidgetItem(self.listWidget)
-        __qlistwidgetitem1.setFont(font2);
-        __qlistwidgetitem2 = QListWidgetItem(self.listWidget)
-        __qlistwidgetitem2.setFont(font2);
-        self.listWidget.setObjectName(u"listWidget")
-        self.listWidget.setGeometry(QRect(10, 10, 811, 101))
-        self.listWidget.setSpacing(3)
-        self.listWidget.setItemAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.stackedWidget.addWidget(self.guidePage)
         self.tabWidget.addTab(self.ingredientsTab, "")
         self.instructionsTab = QWidget()
         self.instructionsTab.setObjectName(u"instructionsTab")
@@ -241,26 +221,40 @@ class Ui_mainWindow(object):
         self.instructionsTable.setGeometry(QRect(10, 10, 851, 461))
         self.instructionsTable.horizontalHeader().setVisible(False)
         self.instructionsTable.horizontalHeader().setStretchLastSection(True)
-        self.stackedWidget_2 = QStackedWidget(self.instructionsTab)
-        self.stackedWidget_2.setObjectName(u"stackedWidget_2")
-        self.stackedWidget_2.setGeometry(QRect(20, 340, 831, 121))
-        self.blankPage_2 = QWidget()
-        self.blankPage_2.setObjectName(u"blankPage_2")
-        self.stackedWidget_2.addWidget(self.blankPage_2)
-        self.guidePage_2 = QWidget()
-        self.guidePage_2.setObjectName(u"guidePage_2")
-        self.listWidget_2 = QListWidget(self.guidePage_2)
-        __qlistwidgetitem3 = QListWidgetItem(self.listWidget_2)
-        __qlistwidgetitem3.setFont(font2);
-        __qlistwidgetitem4 = QListWidgetItem(self.listWidget_2)
-        __qlistwidgetitem4.setFont(font2);
-        __qlistwidgetitem5 = QListWidgetItem(self.listWidget_2)
-        __qlistwidgetitem5.setFont(font2);
-        self.listWidget_2.setObjectName(u"listWidget_2")
-        self.listWidget_2.setGeometry(QRect(10, 10, 811, 101))
-        self.listWidget_2.setSpacing(3)
-        self.listWidget_2.setItemAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.stackedWidget_2.addWidget(self.guidePage_2)
+        self.stackedWidget = QStackedWidget(self.instructionsTab)
+        self.stackedWidget.setObjectName(u"stackedWidget")
+        self.stackedWidget.setGeometry(QRect(20, 290, 831, 171))
+        self.blankPage = QWidget()
+        self.blankPage.setObjectName(u"blankPage")
+        self.stackedWidget.addWidget(self.blankPage)
+        self.guidePage = QWidget()
+        self.guidePage.setObjectName(u"guidePage")
+        self.howToWidget = QListWidget(self.guidePage)
+        __qlistwidgetitem = QListWidgetItem(self.howToWidget)
+        __qlistwidgetitem.setFont(font2);
+        __qlistwidgetitem1 = QListWidgetItem(self.howToWidget)
+        __qlistwidgetitem1.setFont(font2);
+        __qlistwidgetitem2 = QListWidgetItem(self.howToWidget)
+        __qlistwidgetitem2.setFont(font2);
+        self.howToWidget.setObjectName(u"howToWidget")
+        self.howToWidget.setGeometry(QRect(10, 50, 811, 101))
+        self.howToWidget.setSpacing(3)
+        self.howToWidget.setItemAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.addRowButton = QPushButton(self.guidePage)
+        self.addRowButton.setObjectName(u"addRowButton")
+        self.addRowButton.setGeometry(QRect(260, 10, 111, 31))
+        icon8 = QIcon()
+        icon8.addFile(u":/icons/plus_circle.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.addRowButton.setIcon(icon8)
+        self.addRowButton.setIconSize(QSize(20, 20))
+        self.removeRowButton = QPushButton(self.guidePage)
+        self.removeRowButton.setObjectName(u"removeRowButton")
+        self.removeRowButton.setGeometry(QRect(410, 10, 111, 31))
+        icon9 = QIcon()
+        icon9.addFile(u":/icons/minus_circle.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.removeRowButton.setIcon(icon9)
+        self.removeRowButton.setIconSize(QSize(20, 20))
+        self.stackedWidget.addWidget(self.guidePage)
         self.tabWidget.addTab(self.instructionsTab, "")
         self.stackedPages.addWidget(self.recipePage)
         self.groceryPage = QWidget()
@@ -277,7 +271,6 @@ class Ui_mainWindow(object):
         self.stackedPages.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(1)
-        self.stackedWidget_2.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(mainWindow)
@@ -325,29 +318,20 @@ class Ui_mainWindow(object):
         self.searchButton.setToolTip(QCoreApplication.translate("mainWindow", u"search catalog", None))
 #endif // QT_CONFIG(tooltip)
         self.searchButton.setText("")
-
-        __sortingEnabled = self.listWidget.isSortingEnabled()
-        self.listWidget.setSortingEnabled(False)
-        ___qlistwidgetitem = self.listWidget.item(0)
-        ___qlistwidgetitem.setText(QCoreApplication.translate("mainWindow", u"1. On ingredients tab, add recipe ingredients and their measurements.", None));
-        ___qlistwidgetitem1 = self.listWidget.item(1)
-        ___qlistwidgetitem1.setText(QCoreApplication.translate("mainWindow", u"2. On instructions tab, add step-by-step instructions for the recipe.", None));
-        ___qlistwidgetitem2 = self.listWidget.item(2)
-        ___qlistwidgetitem2.setText(QCoreApplication.translate("mainWindow", u"3. Press the save button on the toolbar to add the recipe to your catalog.", None));
-        self.listWidget.setSortingEnabled(__sortingEnabled)
-
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.ingredientsTab), QCoreApplication.translate("mainWindow", u"Ingredients", None))
 
-        __sortingEnabled1 = self.listWidget_2.isSortingEnabled()
-        self.listWidget_2.setSortingEnabled(False)
-        ___qlistwidgetitem3 = self.listWidget_2.item(0)
-        ___qlistwidgetitem3.setText(QCoreApplication.translate("mainWindow", u"1. On ingredients tab, add recipe ingredients and their measurements.", None));
-        ___qlistwidgetitem4 = self.listWidget_2.item(1)
-        ___qlistwidgetitem4.setText(QCoreApplication.translate("mainWindow", u"2. On instructions tab, add step-by-step instructions for the recipe.", None));
-        ___qlistwidgetitem5 = self.listWidget_2.item(2)
-        ___qlistwidgetitem5.setText(QCoreApplication.translate("mainWindow", u"3. Press the save button on the toolbar to add the recipe to your catalog.", None));
-        self.listWidget_2.setSortingEnabled(__sortingEnabled1)
+        __sortingEnabled = self.howToWidget.isSortingEnabled()
+        self.howToWidget.setSortingEnabled(False)
+        ___qlistwidgetitem = self.howToWidget.item(0)
+        ___qlistwidgetitem.setText(QCoreApplication.translate("mainWindow", u"1. On ingredients tab, add recipe ingredients and their measurements.", None));
+        ___qlistwidgetitem1 = self.howToWidget.item(1)
+        ___qlistwidgetitem1.setText(QCoreApplication.translate("mainWindow", u"2. On instructions tab, add step-by-step instructions for the recipe.", None));
+        ___qlistwidgetitem2 = self.howToWidget.item(2)
+        ___qlistwidgetitem2.setText(QCoreApplication.translate("mainWindow", u"3. Press the save button on the toolbar to add the recipe to your catalog.", None));
+        self.howToWidget.setSortingEnabled(__sortingEnabled)
 
+        self.addRowButton.setText("")
+        self.removeRowButton.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.instructionsTab), QCoreApplication.translate("mainWindow", u"Instructions", None))
     # retranslateUi
 

@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem
 from ui_mainwindow import Ui_mainWindow
-
+    
 class MainWindow(QMainWindow, Ui_mainWindow):
     def __init__(self, app):
         super().__init__()
@@ -10,18 +10,28 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.catalogTable.setHorizontalHeaderLabels(["", "Recipe Name", ""])
         self.ingredientsTable.setHorizontalHeaderLabels(["Measurement", 
                                                          "Ingredient"])
+        # Initialize instruction and ingredients table layouts
         self.ingredientsTable.setColumnWidth(0, 150)
         self.ingredientsTable.verticalHeader().setVisible(False)
         self.instructionsTable.verticalHeader().setVisible(True)
-        # TODO: Set up text wraps and max string length limits for all table fields
-        # Set button signals
+        # Initialize sets containing empty table item tuples
+        self.instructionsTable.blanks = set()
+        self.ingredientsTable.blanks = set()
+        # Set stacked widget parent and layout location
+        self.stackedWidget.setParent(self.tabWidget)
+        self.stackedWidget.move(21, 325)
+        # Signals
         self.addButton.clicked.connect(self.addButtonClicked)
         self.backpageButton.clicked.connect(self.backpageButtonClicked)
-        #self.ingredientsTable.itemChanged.connect(self.ingredientAdded)
-        #self.instructionsTable.itemChanged.connect(self.instructionAdded)
         self.ingredientsTable.itemChanged.connect(self.recipeChanged)
         self.instructionsTable.itemChanged.connect(self.recipeChanged)
+        self.addRowButton.clicked.connect(self.rowAppended)
         self.app = app
+
+    def getTable(self):
+        if self.tabWidget.currentWidget() is self.ingredientsTab:
+            return self.ingredientsTable
+        return self.instructionsTable
 
     def tablesPopulated(self):
         tables = [self.ingredientsTable, self.instructionsTable]
@@ -45,7 +55,6 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # Set appropriate stacked widgets indices
         self.stackedPages.setCurrentWidget(self.recipePage)
         self.stackedWidget.setCurrentWidget(self.guidePage)
-        self.stackedWidget_2.setCurrentWidget(self.guidePage_2)
 
     def backpageButtonClicked(self):
         # Set disabled status of toolbar buttons
@@ -109,34 +118,11 @@ class MainWindow(QMainWindow, Ui_mainWindow):
                 if self.saveButton.isEnabled() is False and self.tablesPopulated():
                     self.saveButton.setEnabled(True)
                 return
-            
 
-
-"""
-    def recipeChanged(self):
-        # Checks if currentRow left blank, partially populated, or fully populated
-        if self.tabWidget.currentWidget() is self.ingredientsTab:
-            table = self.ingredientsTable
-        else:
-            table = self.instructionsTable
-        if (table.currentColumn()==table.columnCount()-1 and
-            table.currentRow()==table.rowCount()-1 and
-            table.currentIndex().siblingAtColumn(0).data()!=None):
-            # Appends blank row to end of table
-            table.insertRow(table.rowCount())
-            # Enable save button if both ingredients and instructions tables populated
-            self.saveButton.setDisabled(False)
-        else:
-            self.saveButton.setDisabled(True)
-"""
-
-"""
-    def deleteButtonClicked(self):
-        #TODO:
-    
-    def saveButtonClicked(self):
-        # TODO:
-    
-    def uploadButtonClicked(self):
-        #TODO:
-"""
+    def rowAppended(self):
+        # Disable save button when new row appended to table
+        self.saveButton.setEnabled(False)
+        # Add row items to set of blank items in table
+        table = self.getTable()
+        for column in range(table.columnCount()):
+            table.blanks.add((table.rowCount()-1, column))
