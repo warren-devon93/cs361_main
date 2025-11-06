@@ -27,6 +27,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.instructionsTable.itemChanged.connect(self.recipeChanged)
         self.addRowButton.clicked.connect(self.rowAppended)
         self.removeRowButton.clicked.connect(self.rowRemoved)
+        self.tabWidget.currentChanged.connect(self.resetTableButtons)
         self.app = app
 
     def getTable(self):
@@ -34,12 +35,10 @@ class MainWindow(QMainWindow, Ui_mainWindow):
             return self.ingredientsTable
         return self.instructionsTable
 
-    def tablesPopulated(self):
-        # Checks if both tables have at least one row and no blank items
-        tables = [self.ingredientsTable, self.instructionsTable]
-        for table in tables:
-            if table.blanks is False or table.rowCount()==0:
-                return False
+    def tablePopulated(self, QTableWidget):
+        # Return false if table contains no rows or missing items
+        if bool(QTableWidget.blanks) or QTableWidget.rowCount()==0:
+            return False
         return True
 
     # Slots
@@ -53,7 +52,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.instructionsTable.insertRow(0)
         # Add blank first rows to respective table empty item sets
         self.ingredientsTable.blanks.update([(0,0),(0,1)])
-        self.instructionsTable.blanks.update([(0,0),(0,1)])
+        self.instructionsTable.blanks.update([(0,0)])
         # Set appropriate stacked widgets indices
         self.stackedPages.setCurrentWidget(self.recipePage)
         self.stackedWidget.setCurrentWidget(self.guidePage)
@@ -118,9 +117,9 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         if bool(table.blanks) is False:
             # Enable add row button if table now populated
             self.addRowButton.setEnabled(True)
-            if (bool(self.ingredientsTable.blanks) is False and 
-                bool(self.instructionsTable.blanks) is False):
-                # Enable save button if both tables now populated
+            if (self.tablePopulated(self.ingredientsTable) and 
+                self.tablePopulated(self.instructionsTable)):
+                # Enable save button if both tables populated
                 self.saveButton.setEnabled(True)
         
     def rowAppended(self):
@@ -148,9 +147,29 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # Remove row from table
         table.removeRow(row)
         if table.rowCount()==0:
-            # Disable remove row button and enable add row button if not rows remaining
+            # Disable remove row button and enable add row button if no rows remaining
             self.removeRowButton.setEnabled(False)
             self.addRowButton.setEnabled(True)
-        elif self.tablesPopulated():
+        elif (self.tablePopulated(self.ingredientsTable) and 
+              self.tablePopulated(self.instructionsTable)):
             # Enable save button if both tables populated
             self.saveButton.setEnabled(True)
+
+    def resetTableButtons(self):
+        # Enable add row button and remove row button if ingredients table populated
+        table = self.getTable()
+        # TODO: Test prints
+        print("Empty cells: ", table.blanks)
+        if table.rowCount()==0:
+            # Set if table has no rows
+            self.addRowButton.setEnabled(True)
+            self.removeRowButton.setEnabled(False)
+        elif self.tablePopulated(table):
+            # Set if table fully populated
+            self.addRowButton.setEnabled(True)
+            self.removeRowButton.setEnabled(True)
+        else:
+            # Set if table has at least one blank item
+            self.addRowButton.setEnabled(False)
+            self.removeRowButton.setEnabled(True)
+        
