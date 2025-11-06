@@ -4,6 +4,8 @@ from PySide6.QtWidgets import QTableWidget
 class TableWidget(QTableWidget):
     def __init__(self):
         super().__init__()
+        # Initialize table column dimensions
+        self.setColumnWidth(0, 150)
         # Set of all empty items in table
         self._emptyItems = {}
         # Signals
