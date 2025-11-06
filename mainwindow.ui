@@ -595,6 +595,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
             </item>
            </widget>
            <widget class="QPushButton" name="addRowButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="geometry">
              <rect>
               <x>260</x>

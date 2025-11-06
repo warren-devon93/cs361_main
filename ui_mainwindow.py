@@ -242,6 +242,7 @@ class Ui_mainWindow(object):
         self.howToWidget.setItemAlignment(Qt.AlignmentFlag.AlignCenter)
         self.addRowButton = QPushButton(self.guidePage)
         self.addRowButton.setObjectName(u"addRowButton")
+        self.addRowButton.setEnabled(False)
         self.addRowButton.setGeometry(QRect(260, 10, 111, 31))
         icon8 = QIcon()
         icon8.addFile(u":/icons/plus_circle.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)

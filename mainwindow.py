@@ -26,6 +26,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.ingredientsTable.itemChanged.connect(self.recipeChanged)
         self.instructionsTable.itemChanged.connect(self.recipeChanged)
         self.addRowButton.clicked.connect(self.rowAppended)
+        self.removeRowButton.clicked.connect(self.rowRemoved)
         self.app = app
 
     def getTable(self):
@@ -34,18 +35,16 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         return self.instructionsTable
 
     def tablesPopulated(self):
+        # Checks if both tables have at least one row and no blank items
         tables = [self.ingredientsTable, self.instructionsTable]
         for table in tables:
-            for row in range(table.rowCount()):
-                for column in range(table.columnCount()):
-                    item = table.item(row, column)
-                    if item is None or not item.text():
-                        return False
+            if table.blanks is False or table.rowCount()==0:
+                return False
         return True
 
     # Slots
     def addButtonClicked(self):
-        # change disabled status of toolbar buttons
+        # change enabled status of buttons
         self.backpageButton.setDisabled(False)
         self.addButton.setDisabled(True)
         self.uploadButton.setDisabled(True)
@@ -87,10 +86,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # TODO: Set stacked widget to grocery list page
 
     def recipeChanged(self):
-        if self.tabWidget.currentWidget() is self.ingredientsTab:
-            table = self.ingredientsTable
-        else:
-            table = self.instructionsTable
+        table = self.getTable()
         row = table.currentRow()
         blanks = 0
         # Searches current row for blank cells
@@ -120,9 +116,31 @@ class MainWindow(QMainWindow, Ui_mainWindow):
                 return
 
     def rowAppended(self):
-        # Disable save button when new row appended to table
-        self.saveButton.setEnabled(False)
-        # Add row items to set of blank items in table
+        # Append row to end of table
         table = self.getTable()
+        table.insertRow(table.rowCount())
+        # Add row items to set of blank items in table
         for column in range(table.columnCount()):
             table.blanks.add((table.rowCount()-1, column))
+        # Disable save and addRow buttons when new row appended to table
+        self.saveButton.setEnabled(False)
+        self.addRowButton.setEnabled(False)
+    
+    def rowRemoved(self):
+        table = self.getTable()
+        if table.currentRow()>=0:
+            row = table.currentRow()
+        else:
+            # Last row removed if none currently selected
+            row = table.rowCount()-1
+        # Removes row items from set of empty table items if present
+        for column in range(table.columnCount()):
+            table.blanks.discard((row, column))
+        # Remove row from table
+        table.removeRow(row)
+        if table.rowCount()==0:
+            # Disable removeRow button if no rows remaining
+            self.removeRowButton.setEnabled(False)
+        elif self.tablesPopulated():
+            # Enable save button if both tables populated
+            self.saveButton.setEnabled(True)
