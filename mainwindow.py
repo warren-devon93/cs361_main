@@ -22,6 +22,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.stackedWidget.move(21, 325)
         # Signals
         self.addButton.clicked.connect(self.addButtonClicked)
+        #self.saveButton.clicked.connect()
         #self.backpageButton.clicked.connect(self.backpageButtonClicked)
         self.ingredientsTable.itemChanged.connect(self.recipeChanged)
         self.instructionsTable.itemChanged.connect(self.recipeChanged)
@@ -43,13 +44,18 @@ class MainWindow(QMainWindow, Ui_mainWindow):
 
     # Slots
     def addButtonClicked(self):
-        # change enabled status of buttons
-        self.backpageButton.setDisabled(False)
-        self.addButton.setDisabled(True)
-        self.uploadButton.setDisabled(True)
+        # Set enabled status of buttons
+        self.backpageButton.setEnabled(True)
+        self.addButton.setEnabled(False)
+        self.editButton.setEnabled(False)
+        self.makeListButton.setEnabled(False)
+        self.deleteButton.setEnabled(True)
+        self.saveButton.setEnabled(False)
+        self.uploadButton.setEnabled(False)
         # Insert initial blank rows in ingredients and instructions tables
         self.ingredientsTable.insertRow(0)
         self.instructionsTable.insertRow(0)
+        # Permit editing of header text field
         # Add blank first rows to respective table empty item sets
         self.ingredientsTable.blanks.update([(0,0),(0,1)])
         self.instructionsTable.blanks.update([(0,0)])
@@ -57,6 +63,18 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.stackedPages.setCurrentWidget(self.recipePage)
         self.stackedWidget.setCurrentWidget(self.guidePage)
     
+    def saveButtonClicked(self):
+        # Set enabled status of buttons
+        self.backpageButton.setEnabled(False)
+        self.addButton.setEnabled(True)
+        self.editButton.setEnabled(False)
+        self.makeListButton.setEnabled(False)
+        self.deleteButton.setEnabled(False)
+        self.saveButton.setEnabled(False) 
+        self.uploadButton.setEnabled(True)
+        # Insert new recipe into catalog table
+        
+
     def recipeChanged(self):
         table = self.getTable()
         item = table.currentItem()

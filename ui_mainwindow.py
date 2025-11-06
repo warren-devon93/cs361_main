@@ -18,15 +18,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QFrame, QHeaderView,
     QLineEdit, QListWidget, QListWidgetItem, QMainWindow,
     QPushButton, QSizePolicy, QSplitter, QStackedWidget,
-    QTabWidget, QTableWidget, QTableWidgetItem, QTextEdit,
-    QVBoxLayout, QWidget)
+    QTabWidget, QTableWidget, QTableWidgetItem, QVBoxLayout,
+    QWidget)
 import resource_rc
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         if not mainWindow.objectName():
             mainWindow.setObjectName(u"mainWindow")
-        mainWindow.resize(1070, 721)
+        mainWindow.resize(1120, 721)
         self.centralWidget = QWidget(mainWindow)
         self.centralWidget.setObjectName(u"centralWidget")
         self.hSplitter = QSplitter(self.centralWidget)
@@ -128,10 +128,6 @@ class Ui_mainWindow(object):
         self.pageFrame.setContextMenuPolicy(Qt.ContextMenuPolicy.NoContextMenu)
         self.pageFrame.setFrameShape(QFrame.Shape.StyledPanel)
         self.pageFrame.setFrameShadow(QFrame.Shadow.Raised)
-        self.headerTextEdit = QTextEdit(self.pageFrame)
-        self.headerTextEdit.setObjectName(u"headerTextEdit")
-        self.headerTextEdit.setGeometry(QRect(130, 30, 581, 51))
-        self.headerTextEdit.setReadOnly(True)
         self.stackedPages = QStackedWidget(self.pageFrame)
         self.stackedPages.setObjectName(u"stackedPages")
         self.stackedPages.setGeometry(QRect(20, 100, 901, 541))
@@ -264,6 +260,12 @@ class Ui_mainWindow(object):
         self.groceryList.setObjectName(u"groceryList")
         self.groceryList.setGeometry(QRect(10, 10, 881, 521))
         self.stackedPages.addWidget(self.groceryPage)
+        self.headerLineEdit = QLineEdit(self.pageFrame)
+        self.headerLineEdit.setObjectName(u"headerLineEdit")
+        self.headerLineEdit.setGeometry(QRect(190, 20, 531, 71))
+        self.headerLineEdit.setFont(font1)
+        self.headerLineEdit.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.headerLineEdit.setReadOnly(True)
         self.hSplitter.addWidget(self.pageFrame)
         mainWindow.setCentralWidget(self.centralWidget)
 
@@ -307,14 +309,6 @@ class Ui_mainWindow(object):
         self.uploadButton.setToolTip(QCoreApplication.translate("mainWindow", u"upload recipes with CSV file", None))
 #endif // QT_CONFIG(tooltip)
         self.uploadButton.setText("")
-        self.headerTextEdit.setHtml(QCoreApplication.translate("mainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:700;\">Recipe Catalog</span></p></body></html>", None))
 #if QT_CONFIG(tooltip)
         self.searchButton.setToolTip(QCoreApplication.translate("mainWindow", u"search catalog", None))
 #endif // QT_CONFIG(tooltip)
@@ -334,5 +328,6 @@ class Ui_mainWindow(object):
         self.addRowButton.setText("")
         self.removeRowButton.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.instructionsTab), QCoreApplication.translate("mainWindow", u"Instructions", None))
+        self.headerLineEdit.setText(QCoreApplication.translate("mainWindow", u"Recipe Catalog", None))
     # retranslateUi
 
