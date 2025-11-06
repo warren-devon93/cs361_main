@@ -51,6 +51,9 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # Insert initial blank rows in ingredients and instructions tables
         self.ingredientsTable.insertRow(0)
         self.instructionsTable.insertRow(0)
+        # Add blank first rows to respective table empty item sets
+        self.ingredientsTable.blanks.update([(0,0),(0,1)])
+        self.instructionsTable.blanks.update([(0,0),(0,1)])
         # Set appropriate stacked widgets indices
         self.stackedPages.setCurrentWidget(self.recipePage)
         self.stackedWidget.setCurrentWidget(self.guidePage)
@@ -87,34 +90,41 @@ class MainWindow(QMainWindow, Ui_mainWindow):
 
     def recipeChanged(self):
         table = self.getTable()
-        row = table.currentRow()
-        blanks = 0
-        # Searches current row for blank cells
-        for column in range(table.columnCount()):
-            item = table.item(row, column)
-            if item is None or not item.text():
-                blanks+=1
-        match blanks:
-            case 0:
-                # Enable save button if both tables entirely populated
-                if self.saveButton.isEnabled() is False and self.tablesPopulated():
-                    self.saveButton.setEnabled(True)
-                # Adds new row if current row last in table
-                if table.currentRow()==table.rowCount()-1:
-                    table.insertRow(table.currentRow()+1)
-                return
-            case 1:
-                # Disables save button if current row only partially populated
-                self.saveButton.setDisabled(True)
-                return
-            case _:
-                # Removes blank row from table
+        item = table.currentItem()
+        if item is None or not item.text():
+            # Add item to set of blanks in table
+            table.blanks.add(table.currentItem.row(), table.currentItem().column())
+            # Remove row if all items now blank
+            rowBlank = True
+            for column in range(table.columnCount()):
+                item = table.itemAt(table.currentRow(), column)
+                if item is not None:
+                    rowBlank = False
+                    break
+            if rowBlank:
+                # First remove row items from set of blank items in table
+                for column in range(table.columnCount()):
+                    table.blanks.discard((table.currentRow(), column))
+                # Remove row from table
                 table.removeRow(table.currentRow())
-                # Enable save button if both tables entirely populated
-                if self.saveButton.isEnabled() is False and self.tablesPopulated():
-                    self.saveButton.setEnabled(True)
+            else:
+                # Disable save button and add row button if row now partially populated
+                self.saveButton.setEnabled(False)
+                self.addRowButton.setEnabled(False)
                 return
-
+        else:
+            # Remove newly populated item from set of blanks if present
+            row = table.currentItem().row()
+            column = table.currentItem().column()
+            table.blanks.discard((row, column))
+        if bool(table.blanks) is False:
+            # Enable add row button if table now populated
+            self.addRowButton.setEnabled(True)
+            if (bool(self.ingredientsTable.blanks) is False and 
+                bool(self.instructionsTable.blanks) is False):
+                # Enable save button if both tables now populated
+                self.saveButton.setEnabled(True)
+        
     def rowAppended(self):
         # Append row to end of table
         table = self.getTable()
@@ -122,9 +132,10 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # Add row items to set of blank items in table
         for column in range(table.columnCount()):
             table.blanks.add((table.rowCount()-1, column))
-        # Disable save and addRow buttons when new row appended to table
+        # Set save button, add row button, and remove row button appropriately
         self.saveButton.setEnabled(False)
         self.addRowButton.setEnabled(False)
+        self.removeRowButton.setEnabled(True)
     
     def rowRemoved(self):
         table = self.getTable()
@@ -139,8 +150,9 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # Remove row from table
         table.removeRow(row)
         if table.rowCount()==0:
-            # Disable removeRow button if no rows remaining
+            # Disable remove row button and enable add row button if not rows remaining
             self.removeRowButton.setEnabled(False)
+            self.addRowButton.setEnabled(True)
         elif self.tablesPopulated():
             # Enable save button if both tables populated
             self.saveButton.setEnabled(True)
