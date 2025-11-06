@@ -51,7 +51,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.ingredientsTable.insertRow(0)
         self.instructionsTable.insertRow(0)
         # Add blank first rows to respective table empty item sets
-        self.ingredientsTable.blanks.update([(0,0),(1,0)])
+        self.ingredientsTable.blanks.update([(0,0),(0,1)])
         self.instructionsTable.blanks.update([(0,0)])
         # Set appropriate stacked widgets indices
         self.stackedPages.setCurrentWidget(self.recipePage)
@@ -62,19 +62,18 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         item = table.currentItem()
         if item is None or not item.text():
             # Add item to set of blanks in table
-            table.blanks.add((item.column(), item.row()))
-            # Remove row if all items now blank
+            table.blanks.add((item.row(), item.column()))
+            # Remove row if all its items are blank
             rowBlank = True
             for column in range(table.columnCount()):
-                item = table.itemAt(column, item.row())
-                if (item.column(), item.row()) not in table.blanks:
+                item = table.item(item.row(), column)
+                if item and item.text():
                     rowBlank = False
                     break
             if rowBlank:
-                # First remove row items from set of blank items in table
+                # Remove row items from set of blank items in table
                 for column in range(table.columnCount()):
-                    table.blanks.discard((column, item.row()))
-                # Remove row from table
+                    table.blanks.discard((item.row(), column))
                 table.removeRow(item.row())
             else:
                 # Disable save button and add row button if row now partially populated
@@ -83,7 +82,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
                 return
         else:
             # Remove newly populated item from set of blanks if present
-            table.blanks.discard((item.column(), item.row()))
+            table.blanks.discard((item.row(), item.column()))
         if bool(table.blanks) is False:
             # Enable add row button if table now populated
             self.addRowButton.setEnabled(True)
@@ -98,7 +97,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         table.insertRow(table.rowCount())
         # Add row items to set of blank items in table
         for column in range(table.columnCount()):
-            table.blanks.add((column, table.rowCount()-1))
+            table.blanks.add((table.rowCount()-1, column))
         # Set save button, add row button, and remove row button appropriately
         self.saveButton.setEnabled(False)
         self.addRowButton.setEnabled(False)
@@ -113,7 +112,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
             row = table.rowCount()-1
         # Removes row items from set of empty table items if present
         for column in range(table.columnCount()):
-            table.blanks.discard((column, row))
+            table.blanks.discard((row, column))
         # Remove row from table
         table.removeRow(row)
         if table.rowCount()==0:
