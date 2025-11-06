@@ -97,7 +97,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
             rowBlank = True
             for column in range(table.columnCount()):
                 item = table.itemAt(table.currentRow(), column)
-                if item is not None:
+                if item is not None or not item.text().isEmpty():
                     rowBlank = False
                     break
             if rowBlank:
@@ -158,8 +158,6 @@ class MainWindow(QMainWindow, Ui_mainWindow):
     def resetTableButtons(self):
         # Enable add row button and remove row button if ingredients table populated
         table = self.getTable()
-        # TODO: Test prints
-        print("Empty cells: ", table.blanks)
         if table.rowCount()==0:
             # Set if table has no rows
             self.addRowButton.setEnabled(True)
