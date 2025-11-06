@@ -1,1 +1,4 @@
 *.venv
+TODO.txt
+mainwindow_v1.ui
+__pycache__/
