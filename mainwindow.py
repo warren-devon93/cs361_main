@@ -93,7 +93,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         item = table.currentItem()
         if item is None or not item.text():
             # Add item to set of blanks in table
-            table.blanks.add(table.currentItem.row(), table.currentItem().column())
+            table.blanks.add((item.row(), item.column()))
             # Remove row if all items now blank
             rowBlank = True
             for column in range(table.columnCount()):
@@ -114,9 +114,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
                 return
         else:
             # Remove newly populated item from set of blanks if present
-            row = table.currentItem().row()
-            column = table.currentItem().column()
-            table.blanks.discard((row, column))
+            table.blanks.discard((item.row(), item.column()))
         if bool(table.blanks) is False:
             # Enable add row button if table now populated
             self.addRowButton.setEnabled(True)
