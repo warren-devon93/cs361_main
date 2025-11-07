@@ -23,8 +23,11 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.stackedWidget.move(21, 325)
         # Signals
         self.addButton.clicked.connect(self.addButtonClicked)
+        self.deleteButton.clicked.connect(self.deleteButtonClicked)
         self.saveButton.clicked.connect(self.saveButtonClicked)
         self.backpageButton.clicked.connect(self.backpageButtonClicked)
+        self.catalogTable.itemClicked.connect(self.recipeClicked)
+        self.catalogTable.itemDoubleClicked.connect(self.recipeDoubleClicked)
         self.ingredientsTable.itemChanged.connect(self.recipeChanged)
         self.instructionsTable.itemChanged.connect(self.recipeChanged)
         self.addRowButton.clicked.connect(self.rowAppended)
@@ -76,10 +79,15 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # Add blank first rows to respective table empty item sets
         self.ingredientsTable.blanks.update([(0,0),(0,1)])
         self.instructionsTable.blanks.update([(0,0)])
-        # Set appropriate stacked widgets indices
+        # Set appropriate tabs and stacked widgets
         self.stackedPages.setCurrentWidget(self.recipePage)
         self.stackedWidget.setCurrentWidget(self.guidePage)
-    
+        self.tabWidget.setCurrentWidget(self.ingredientsTab)
+
+    def deleteButtonClicked(self):
+        # Remove selected row.
+        self.catalogTable.removeRow(self.catalogTable.currentRow())
+
     def saveButtonClicked(self):
         # Set enabled status of buttons
         self.backpageButton.setEnabled(False)
@@ -99,6 +107,9 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         table.setItem(table.rowCount()-1, 1, item)
         # Return view to catalog page
         self.stackedPages.setCurrentWidget(self.catalogPage)
+        # Clear both recipe page tables
+        self.ingredientsTable.setRowCount(0)
+        self.instructionsTable.setRowCount(0)
 
     def recipeChanged(self):
         table = self.getTable()
@@ -182,4 +193,11 @@ class MainWindow(QMainWindow, Ui_mainWindow):
             # Set if table has at least one blank item
             self.addRowButton.setEnabled(False)
             self.removeRowButton.setEnabled(True)
-        
+
+    def recipeClicked(self):
+        # Enable delete button
+        self.deleteButton.setEnabled(True)
+    
+    def recipeDoubleClicked(self):
+        # Disable delete button
+        self.deleteButton.setEnabled(False)
