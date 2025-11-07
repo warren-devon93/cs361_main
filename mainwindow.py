@@ -24,7 +24,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # Signals
         self.addButton.clicked.connect(self.addButtonClicked)
         self.saveButton.clicked.connect(self.saveButtonClicked)
-        #self.backpageButton.clicked.connect(self.backpageButtonClicked)
+        self.backpageButton.clicked.connect(self.backpageButtonClicked)
         self.ingredientsTable.itemChanged.connect(self.recipeChanged)
         self.instructionsTable.itemChanged.connect(self.recipeChanged)
         self.addRowButton.clicked.connect(self.rowAppended)
@@ -44,6 +44,20 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         return True
 
     # Slots
+    def backpageButtonClicked(self):
+        # Set enabled status of buttons
+        self.backpageButton.setEnabled(False)
+        self.addButton.setEnabled(True)
+        self.editButton.setEnabled(False)
+        self.makeListButton.setEnabled(False)
+        self.deleteButton.setEnabled(False)
+        self.saveButton.setEnabled(False) 
+        self.uploadButton.setEnabled(True)
+        # Initialize catalog page
+        self.stackedPages.setCurrentWidget(self.catalogPage)
+        self.headerLineEdit.setText("Recipe Catalog")
+        self.headerLineEdit.setReadOnly(False)
+
     def addButtonClicked(self):
         # Set enabled status of buttons
         self.backpageButton.setEnabled(True)
@@ -83,7 +97,6 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         table = self.catalogTable
         table.insertRow(table.rowCount())
         table.setItem(table.rowCount()-1, 1, item)
-
         # Return view to catalog page
         self.stackedPages.setCurrentWidget(self.catalogPage)
 
