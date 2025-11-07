@@ -328,6 +328,12 @@
           <height>411</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="lineWidth">
          <number>1</number>
         </property>

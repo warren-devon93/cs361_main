@@ -159,6 +159,10 @@ class Ui_mainWindow(object):
         self.catalogTable.setObjectName(u"catalogTable")
         self.catalogTable.setEnabled(True)
         self.catalogTable.setGeometry(QRect(10, 10, 881, 411))
+        font1 = QFont()
+        font1.setPointSize(12)
+        font1.setBold(True)
+        self.catalogTable.setFont(font1)
         self.catalogTable.setLineWidth(1)
         self.catalogTable.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         self.catalogTable.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustToContentsOnFirstShow)
@@ -174,10 +178,10 @@ class Ui_mainWindow(object):
         self.lineEdit = QLineEdit(self.catalogPage)
         self.lineEdit.setObjectName(u"lineEdit")
         self.lineEdit.setGeometry(QRect(120, 450, 741, 61))
-        font1 = QFont()
-        font1.setPointSize(18)
-        font1.setBold(True)
-        self.lineEdit.setFont(font1)
+        font2 = QFont()
+        font2.setPointSize(18)
+        font2.setBold(True)
+        self.lineEdit.setFont(font2)
         self.stackedPages.addWidget(self.catalogPage)
         self.recipePage = QWidget()
         self.recipePage.setObjectName(u"recipePage")
@@ -190,14 +194,11 @@ class Ui_mainWindow(object):
         self.ingredientsTable = QTableWidget(self.ingredientsTab)
         if (self.ingredientsTable.columnCount() < 2):
             self.ingredientsTable.setColumnCount(2)
-        font2 = QFont()
-        font2.setPointSize(12)
-        font2.setBold(True)
         __qtablewidgetitem3 = QTableWidgetItem()
-        __qtablewidgetitem3.setFont(font2);
+        __qtablewidgetitem3.setFont(font1);
         self.ingredientsTable.setHorizontalHeaderItem(0, __qtablewidgetitem3)
         __qtablewidgetitem4 = QTableWidgetItem()
-        __qtablewidgetitem4.setFont(font2);
+        __qtablewidgetitem4.setFont(font1);
         self.ingredientsTable.setHorizontalHeaderItem(1, __qtablewidgetitem4)
         self.ingredientsTable.setObjectName(u"ingredientsTable")
         self.ingredientsTable.setGeometry(QRect(10, 10, 851, 461))
@@ -227,11 +228,11 @@ class Ui_mainWindow(object):
         self.guidePage.setObjectName(u"guidePage")
         self.howToWidget = QListWidget(self.guidePage)
         __qlistwidgetitem = QListWidgetItem(self.howToWidget)
-        __qlistwidgetitem.setFont(font2);
+        __qlistwidgetitem.setFont(font1);
         __qlistwidgetitem1 = QListWidgetItem(self.howToWidget)
-        __qlistwidgetitem1.setFont(font2);
+        __qlistwidgetitem1.setFont(font1);
         __qlistwidgetitem2 = QListWidgetItem(self.howToWidget)
-        __qlistwidgetitem2.setFont(font2);
+        __qlistwidgetitem2.setFont(font1);
         self.howToWidget.setObjectName(u"howToWidget")
         self.howToWidget.setGeometry(QRect(10, 50, 811, 101))
         self.howToWidget.setSpacing(3)
@@ -263,7 +264,7 @@ class Ui_mainWindow(object):
         self.headerLineEdit = QLineEdit(self.pageFrame)
         self.headerLineEdit.setObjectName(u"headerLineEdit")
         self.headerLineEdit.setGeometry(QRect(190, 20, 531, 71))
-        self.headerLineEdit.setFont(font1)
+        self.headerLineEdit.setFont(font2)
         self.headerLineEdit.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.headerLineEdit.setReadOnly(True)
         self.hSplitter.addWidget(self.pageFrame)

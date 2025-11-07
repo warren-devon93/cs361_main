@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QListWidgetItem
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTableWidgetItem
 from ui_mainwindow import Ui_mainWindow
     
 class MainWindow(QMainWindow, Ui_mainWindow):
@@ -11,9 +11,10 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.ingredientsTable.setHorizontalHeaderLabels(["Measurement", 
                                                          "Ingredient"])
         # Initialize instruction and ingredients table layouts
-        self.ingredientsTable.setColumnWidth(0, 150)
+        self.catalogTable.verticalHeader().setVisible(False)
         self.ingredientsTable.verticalHeader().setVisible(False)
         self.instructionsTable.verticalHeader().setVisible(True)
+        self.ingredientsTable.setColumnWidth(0, 150)
         # Initialize sets containing empty table item tuples
         self.instructionsTable.blanks = set()
         self.ingredientsTable.blanks = set()
@@ -22,7 +23,7 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.stackedWidget.move(21, 325)
         # Signals
         self.addButton.clicked.connect(self.addButtonClicked)
-        #self.saveButton.clicked.connect()
+        self.saveButton.clicked.connect(self.saveButtonClicked)
         #self.backpageButton.clicked.connect(self.backpageButtonClicked)
         self.ingredientsTable.itemChanged.connect(self.recipeChanged)
         self.instructionsTable.itemChanged.connect(self.recipeChanged)
@@ -55,7 +56,9 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         # Insert initial blank rows in ingredients and instructions tables
         self.ingredientsTable.insertRow(0)
         self.instructionsTable.insertRow(0)
-        # Permit editing of header text field
+        # Initialize header line edit widget for recipe page
+        self.headerLineEdit.setReadOnly(False)
+        self.headerLineEdit.setText("<Click Here to Add Recipe Name>")
         # Add blank first rows to respective table empty item sets
         self.ingredientsTable.blanks.update([(0,0),(0,1)])
         self.instructionsTable.blanks.update([(0,0)])
@@ -72,8 +75,17 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.deleteButton.setEnabled(False)
         self.saveButton.setEnabled(False) 
         self.uploadButton.setEnabled(True)
-        # Insert new recipe into catalog table
-        
+        # Retrieve new recipe name, initialize header line edit widget for catalog page
+        item = QTableWidgetItem(self.headerLineEdit.text())
+        self.headerLineEdit.setText("Recipe Catalog")
+        self.headerLineEdit.setReadOnly(False)
+        # Append new recipe to catalog table
+        table = self.catalogTable
+        table.insertRow(table.rowCount())
+        table.setItem(table.rowCount()-1, 1, item)
+
+        # Return view to catalog page
+        self.stackedPages.setCurrentWidget(self.catalogPage)
 
     def recipeChanged(self):
         table = self.getTable()
