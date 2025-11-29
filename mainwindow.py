@@ -13,10 +13,6 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.catalogTable.setHorizontalHeaderLabels(["", "Recipe Name", ""])
         self.ingredientsTable.setHorizontalHeaderLabels(["Measurement", 
                                                          "Ingredient"])
-        # TODO: Set up text wraps and max string length limits for all table fields
-        # Set stacked widget parent and location
-        #self.stackedWidget.setParent(self.tabWidget)
-        #self.stackedWidget.move(21, 325)
         # Signals
         self.addButton.clicked.connect(self.addButtonClicked)
         self.backpageButton.clicked.connect(self.backpageButtonClicked)
