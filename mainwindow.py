@@ -1,6 +1,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTableWidgetItem
 from ui_mainwindow import Ui_mainWindow
+import sqlite3
     
 class MainWindow(QMainWindow, Ui_mainWindow):
     def __init__(self, app):
@@ -34,18 +35,16 @@ class MainWindow(QMainWindow, Ui_mainWindow):
         self.removeRowButton.clicked.connect(self.rowRemoved)
         self.tabWidget.currentChanged.connect(self.resetTableButtons)
         self.app = app
-
+    # Returns either ingredients or instructinos table depending on current tab widget
     def getTable(self):
         if self.tabWidget.currentWidget() is self.ingredientsTab:
             return self.ingredientsTable
         return self.instructionsTable
-
+    # Return false if table contains no rows or missing items
     def tablePopulated(self, QTableWidget):
-        # Return false if table contains no rows or missing items
         if bool(QTableWidget.blanks) or QTableWidget.rowCount()==0:
             return False
         return True
-
     # Slots
     def backpageButtonClicked(self):
         # Set enabled status of buttons
