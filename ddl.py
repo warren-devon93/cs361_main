@@ -5,12 +5,12 @@ config.read("config.ini")
 path_to_cwd = config["main"]["path"]
 db_filename = "recipes"
 request = {"db_path": path_to_cwd + db_filename, "statement": ""}
-statements = ("""CREATE TABLE Recipes 
+creates = ("""CREATE TABLE Recipes 
                     (rec_name TEXT PRIMARY KEY)""",
               """CREATE TABLE Ingredients 
                     (ing_name TEXT PRIMARY KEY)""",
               """CREATE TABLE Instructions 
-                    (inst_id INT PRIMARY KEY, rec_name TEXT, inst_num INT, inst_desc TEXT,
+                    (inst_id INT PRIMARY KEY, rec_name TEXT, step_num INT, step_desc TEXT,
                     FOREIGN KEY (rec_name) REFERENCES Recipes (rec_name)
                         ON DELETE CASCADE)""",
               """CREATE TABLE Units 
