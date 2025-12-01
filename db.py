@@ -72,8 +72,8 @@ def insert_units(request):
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
     config_and_connect(socket, endpoint)
-    command = inserts["unit"]
-    for unit in units: # See dml.py
+    command = inserts["unit"] # See dml.py
+    for unit in units: # ibid
         start_subprocess(endpoint)
         request["statement"] = parse_statement([unit], command)
         send_request(socket, request)
@@ -90,6 +90,17 @@ def setup_database(request):
         send_request(socket, request)
     insert_units(request)
 
-# Initialize request object and create recipes database if none exists 
+# TODO: Initialize request object and create recipes database if none exists 
 request = {"db_path": "", "statement": ""}
 if os.path.isfile('recipes.db') is False: setup_database(request)
+# TODO: Insert test data into all tables
+
+# TODO: Query test data
+
+# TODO: Update test data
+
+# TODO: Query test data
+
+# TODO: Delete test data
+
+# TODO: Query test data
